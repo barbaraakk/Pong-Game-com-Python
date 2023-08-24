@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Game panel</title>
+    <meta http-equiv="refresh" content="1">
+</head>
+
+<body>
+    <div id="listagem">
+
+    </div>
+
+    <!-- inclusão da biblioteca jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <script>
+        // chamada ao backend
+        var rota = 'http://localhost:5000/listar';
+
+        // chamada ajax
+        var acao = $.ajax({
+            url: rota,
+            dataType: 'json', // os dados são recebidos no formato json,
+        });
+
+        // se a chamada der certo
+        acao.done(function (dados) {
+            if (dados.resultado == 'ok') {
+                // percorrer a lista de resultados
+                for (var p of dados.detalhes) {
+                    // acrescentar informações da pessoa em uma string
+                    var lin = '==> ' + 'Pontuação:' + p.pontos;
+                    // adiciona a string criada na div
+                    $('#listagem').append(lin);
+                }
+            } else {
+                alert("ERRO");
+            }
+        });
+
+        // se a chamada der erro
+        acao.fail(function () {
+            alert("Ocorreu algum erro na chamada ajax");
+        });
+
+    </script>
+</body>
+
+</html>
+
+<!-- comando para servir páginas HTML: python3 -m http.server
+    abrir em: localhost:8000
+-->
