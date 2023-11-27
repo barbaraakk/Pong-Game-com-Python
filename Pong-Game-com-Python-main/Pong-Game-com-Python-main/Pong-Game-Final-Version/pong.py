@@ -30,13 +30,31 @@ clock = pygame.time.Clock()
 #Define as cores
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-
 FIGURA_WIDTH, FIGURA_HEIGHT= 20, 100
 BOLA_RADIUS = 7
  
 SCORE_FONT = pygame.font.SysFont("comicsans", 40)
 
 SCORE_VENCEDOR = 5
+
+imagem = {}
+
+
+#background image
+background = pygame.image.load('Pong-Game-Final-Version/back.png')
+background = pygame.transform.scale(background, (700, 500))
+'''backgroundWidth = background.get_width()
+backgroundHeight = background.get_height()
+count = 1
+while backgroundWidth < WIDTH and backgroundHeight < HEIGHT:
+        backgroundWidth = background.get_width()*count
+        backgroundHeight = background.get_height()*count
+        count+=0.1
+while backgroundWidth > WIDTH and backgroundHeight > HEIGHT:
+        backgroundWidth = background.get_width()/count
+        backgroundHeight = background.get_height()/count
+        count+=0.1
+background = pygame.transform.scale(background, (backgroundWidth, backgroundHeight))'''
 
 class Figura:
     COLOR = WHITE
@@ -93,7 +111,7 @@ class Bola:
   
 #Desenha na janela do jogo
 def draw(JANELA, figuras, bola, score_direito, score_esquerdo):
-    JANELA.fill(BLACK)
+    
 
     #Desenha o score
     score_esquerdo_text = SCORE_FONT.render(str(score_esquerdo), 1, WHITE)
@@ -160,6 +178,7 @@ def figura_movimento(teclas, left_figura, figura_direita):
 
 
 
+
 def main():
     
     rodando = True
@@ -180,7 +199,8 @@ def main():
     score_esquerdo = 0
     recordE = jogadorE.pontos
 
-
+    #imagem['back'] = pygame.image.load(background).convert_alpha()
+    imagem['back'] = background
 
     #Loop principal
     while rodando:
@@ -189,6 +209,7 @@ def main():
         
         draw(JANELA, [left_figura, figura_direita], bola, score_direito, score_esquerdo)
 
+        JANELA.blit(imagem['back'], (0, 0))
 
         #Verifica se o usuário quer sair do jogo
         for event in pygame.event.get():
